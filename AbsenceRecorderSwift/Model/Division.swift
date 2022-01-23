@@ -20,7 +20,7 @@ class Division {
     static func createDivision(code: String, of size: Int) -> Division {
         let division = Division(code:code)
         for _ in 0 ... size {
-            division.students.append(Student(forename: "Test", surname: "Student", birthday: Date())
+            division.students.append(Student(forename: "Test", surname: "Student", birthday: Date()))
         }
         return division
     }
