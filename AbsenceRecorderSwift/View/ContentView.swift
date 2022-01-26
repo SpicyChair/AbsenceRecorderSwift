@@ -8,14 +8,43 @@
 import SwiftUI
 
 struct ContentView: View {
-    let divs:[Division] = Division.examples
+    let divisions: [Division]
+    @State private var currentDate: Date = Date()
+    
     var body: some View {
-        Text("Hello World!")
+        NavigationView {
+            List(divisions, id: \.self.code) { division in
+                
+                DivisionItem(division: division)
+                    
+            }
+            .navigationTitle(currentDate.getShortDate())
+                .toolbar() {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            currentDate.addDaysToDate(days: -1)
+                            
+                        }) {
+                            Image(systemName: "arrow.backward")
+                        }
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            currentDate.addDaysToDate(days: 1)
+                            
+                        }) {
+                            Image(systemName: "arrow.forward")
+                        }
+                    }
+                }
+        }
+        
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(divisions: Division.examples)
     }
 }
