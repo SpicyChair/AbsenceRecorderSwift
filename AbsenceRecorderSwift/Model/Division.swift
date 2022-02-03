@@ -11,16 +11,34 @@ import Foundation
 class Division {
     let code: String
     var students:[Student] = []
+    var absences: [Absence] = []
     
     init(code: String) {
         self.code = code
     }
     
+    func getAbsence(date: Date) -> Absence? {
+        absences.first {
+            let comparison = Calendar.current.compare($0.takenOn, to: date, toGranularity: .day)
+            return comparison == .orderedSame
+        }
+    }
+    func createAbsenceOrGetExistingIfAvailable(date: Date) -> Absence {
+        //if exists, return it else create new one
+            if let existingAbsence = self.getAbsence(date: date) {
+                return existingAbsence
+            } else {
+                let absence = Absence(date: date, students: students)
+                absences.append(absence)
+                return absence
+            }
+        }
+    
     #if DEBUG
     static func createDivision(code: String, of size: Int) -> Division {
         let divisions = Division(code:code)
-        for _ in 0 ... size {
-            divisions.students.append(Student(forename: "Test", surname: "Student", birthday: Date()))
+        for i in 0 ... size {
+            divisions.students.append(Student(forename: "Forename \(i)", surname: "Surname", birthday: Date()))
         }
         return divisions
     }

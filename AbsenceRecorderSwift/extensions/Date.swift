@@ -15,7 +15,7 @@ extension Date {
         return formatter.string(from: self)
     }
     
-    mutating func addDaysToDate(days:Int) {
-        self = Calendar.current.date(byAdding: .day, value: days, to: self) ?? self
+    func addDaysToDate(days:Int) -> Date {
+        return Calendar.current.date(byAdding: .day, value: days, to: self) ?? self
     }
 }

@@ -15,7 +15,7 @@ struct DivisionsView: View {
     var body: some View {
         NavigationView {
             List(state.divisions, id: \.self.code) { division in
-                NavigationLink(destination: AbsenceView(division: division)) {
+                NavigationLink(destination: AbsenceView(absence: division.createAbsenceOrGetExistingIfAvailable(date: Date()))) {
                     DivisionItem(division: division)
                 }
                     
@@ -24,7 +24,7 @@ struct DivisionsView: View {
                 .toolbar() {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: {
-                            currentDate.addDaysToDate(days: -1)
+                            currentDate = currentDate.addDaysToDate(days: -1)
                             
                         }) {
                             Image(systemName: "arrow.backward")
@@ -32,7 +32,7 @@ struct DivisionsView: View {
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
-                            currentDate.addDaysToDate(days: 1)
+                            currentDate = currentDate.addDaysToDate(days: 1)
                             
                         }) {
                             Image(systemName: "arrow.forward")
